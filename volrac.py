@@ -21,7 +21,8 @@ def contact():
 		
 		contact_sender = request.form['email']
 		contact_msg = request.form['message']
-		msg = Message(contact_msg,
+		msg = Message(subject="Volrac contact form",
+					  body=contact_msg,
 					  sender=contact_sender,
 					  recipients=[settings.RECEIVER_EMAIL])
 
@@ -33,8 +34,8 @@ def contact():
 	return render_template('contact.html')
 
 if __name__ == "__main__":
-	app.secret_key = 'super secret key'
+	app.secret_key = settings.SECRET_KEY
 	app.config['SESSION_TYPE'] = 'filesystem'
 
-	app.debug = True
+	#app.debug = True
 	app.run(host='0.0.0.0')
