@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 
 import os
 import settings
-from flask_mail import Mail
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
@@ -11,19 +11,30 @@ def index():
 	message = "Trust me, I'm a coder."
 	return render_template('index.html', message=message)
 
+@app.route('/about')
 def about():
 	return render_template('about.html')
 
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
 	if request.method == 'POST':
 		
+		contact_sender = request.form['email']
 		contact_msg = request.form['message']
-		msg = Message(contact_msg,recipients=[settings.RECEIVER_EMAIL])
+		msg = Message(contact_msg,
+					  sender=contact_sender,
+					  recipients=[settings.RECEIVER_EMAIL])
 
 		mail = Mail(app)
 		mail.send(msg)
 
-	return render_template('contact')
+		flash('Message successfully sent to the trustworthy coder.', 'success')
+
+	return render_template('contact.html')
 
 if __name__ == "__main__":
+	app.secret_key = 'super secret key'
+	app.config['SESSION_TYPE'] = 'filesystem'
+
+	app.debug = True
 	app.run(host='0.0.0.0')

@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Volrac can be contacted.
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Contact me.</h1>
+			<form method="POST">
+				<div class="form-group">
+					<input type="email" name="email" class="form-control" placeholder="Email Address" required />
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" name="message" placeholder="Message" rows="8" required></textarea>
+				</div>
+				{% with messages = get_flashed_messages(with_categories=true) %}
+				  {% if messages %}
+
+				    {% for category, message in messages %}
+				    	<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						  {{ message }}
+						</div>
+
+				    {% endfor %}
+
+				  {% endif %}
+				{% endwith %}
+				<button class="btn btn-default">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
