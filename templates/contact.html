@@ -11,6 +11,7 @@ Volrac can be contacted.
 		<div class="col-sm-6" id="main-col">
 			<h1>Contact me.</h1>
 			<form method="POST">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
 				<div class="form-group">
 					<input type="email" name="email" class="form-control" placeholder="Email Address" required />
 				</div>
@@ -32,7 +33,7 @@ Volrac can be contacted.
 
 				  {% endif %}
 				{% endwith %}
-				<button class="btn btn-default">Submit</button>
+				<button class="btn btn-secondary">Submit</button>
 			</form>
 		</div>
 	</div>
