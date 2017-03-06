@@ -3,8 +3,11 @@
 {% block content %}
 <div class="container-fluid">
 	<div class="row justify-content-md-center">
-		<div class="col">
-			<h1 id="trust-me">{{ message }}</h1>
+		<div class="col" id="main-col">
+			<h1>{{ message }}</h1>
+			<small>
+				<a href="{{ url_for('contact') }}">contact me.</a>
+			</small>
 		</div>
 	</div>
 </div>

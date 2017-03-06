@@ -6,7 +6,13 @@ body {
 	background-size: cover;
 	color: #FFF;
 }
-#trust-me {
+#main-col {
 	padding-top: 55px;
 	margin-left: 15px;
+}
+a {
+	color: #999;
+}
+a:hover {
+	color: #666;
 }
