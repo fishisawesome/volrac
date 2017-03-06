@@ -6,6 +6,9 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
+app.secret_key = os.environ['SECRET_KEY']
+app.config['SESSION_TYPE'] = 'filesystem'
+
 @app.route('/')
 def index():
 	message = "Trust me, I'm a coder."
@@ -34,8 +37,4 @@ def contact():
 	return render_template('contact.html')
 
 if __name__ == "__main__":
-	app.secret_key = settings.SECRET_KEY
-	app.config['SESSION_TYPE'] = 'filesystem'
-
-	#app.debug = True
 	app.run(host='0.0.0.0')
