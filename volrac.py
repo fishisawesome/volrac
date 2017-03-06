@@ -6,7 +6,7 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
-app.secret_key = os.environ['SECRET_KEY']
+app.secret_key = settings.SECRET_KEY
 app.config['SESSION_TYPE'] = 'filesystem'
 
 @app.route('/')
