@@ -10,9 +10,9 @@ body {
 	padding-top: 55px;
 	margin-left: 15px;
 }
-a {
+a, a:visited {
 	color: #999;
 }
-a:hover {
+a:hover, a:active {
 	color: #666;
 }
