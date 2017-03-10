@@ -5,10 +5,15 @@
 # @Link    : http://github.com/fishisawesome/murakami.py
 # @Version : 0.1
 
+from __future__ import division
 import os
 import bs4
 import requests
 import re
+import nltk
+import numpy
+import pandas
+from pandas import DataFrame
 
 def get_soup(url):
     """
@@ -43,9 +48,56 @@ def main():
 
                 final_quotes.append(final_quote)
 
+    quotes_with_score = []
     for quote in final_quotes:
-        print quote['quote'], ' - ', quote['book']
-        print '----------\n\n'
+        quote_with_score = {}
+        splitter = nltk.data.load('/Users/V/Documents/simplebox/volrac/punkt/english.pickle')
+        tokenizer = nltk.tokenize.TreebankWordTokenizer()
+
+        sentences = splitter.tokenize(quote['quote'].decode('utf-8').strip())
+        tokenized_sentences = [tokenizer.tokenize(word) for word in sentences]
+        pos = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+        pos = [[(word, word, [postag]) for (word, postag) in sentence] for sentence in pos]
+
+        with open('sentiment/positive.txt') as sentiment:
+            content = sentiment.readlines()
+        
+        positive_words = [x.strip() for x in content]
+
+        with open('sentiment/negative.txt') as sentiment:
+            content = sentiment.readlines()
+        
+        negative_words = [x.strip() for x in content]
+
+        happy_words = []
+        sad_words = []
+
+        for p in pos:
+            for w in p:
+                if w[0] in positive_words:
+                    happy_words.append(w[0])
+                if w[0] in negative_words:
+                    sad_words.append(w[0])
+
+        
+        total_words = len(tokenizer.tokenize(quote['quote']))
+        percentage_happy = len(happy_words) / total_words
+        percentage_sad = len(sad_words) / total_words
+
+        quote['total_words'] = total_words
+        quote['percentage_happy'] = percentage_happy
+        quote['percentage_sad'] = percentage_sad
+
+        quote['happy_words'] = ', '.join(happy_words)
+        quote['sad_words'] = ', '.join(sad_words)
+
+        quote_with_score = quote;
+        quotes_with_score.append(quote_with_score)
+
+
+    df = DataFrame(quotes_with_score)
+    files_path = '/Users/V/Documents/simplebox/volrac/quotes.csv'
+    df.to_csv(files_path)
 
     return True
 
