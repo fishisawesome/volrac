@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Volrac will guess your favorite songs.
+{% endblock %}
+
+{% block head %}
+<style>
+body {
+	background: url('/static/images/spotify.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: #000;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-6" id="main-col">
+			<div class="card">
+			  <h3 class="card-header">Music.</h3>
+			  <div class="card-block">
+			    <h4 class="card-title">Let's see if I can guess.</h4>
+			    <p class="card-text">I will try to find out your favorite songs based on your Spotify account.</p>
+			    <form>
+					<div class="form-group">
+						<input type="text" name="username" class="form-control" placeholder="Your Spotify Username" required />
+					</div>
+					<button class="btn btn-primary">Try it.</button>
+				</form>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

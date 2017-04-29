@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, session, redirect, jsonify
 
 import os
 import settings
@@ -67,6 +67,52 @@ def contact():
 @app.route('/read')
 def read():
     return redirect("//thegreat.volrac.net", code=302)
+
+@app.route('/spotify')
+def spotify():
+    if not 'username' in request.args and not 'code' in request.args:
+        return render_template('spotify_form.html')
+
+    import music_taste_over_time as mtot
+
+    session_key = '_volrac_sp_username'
+    if 'username' in request.args:
+        username = request.args.get('username')
+        session[session_key] = username
+    else:
+        username = session[session_key] if session_key in session else 'carlo.villamayor'
+
+    token = mtot.get_sp_token(username)
+    
+    if not token:
+
+        if not 'code' in request.args:
+            auth_url = mtot.get_auth_url(username)
+            return redirect(auth_url)
+        else:
+            sp_code = request.args.get('code')
+            token = mtot.get_token_from_code(username, sp_code)
+
+    #tracks = mtot.get_top_tracks(token, request.args.get('time_range'))
+
+    ranges = ['short_term', 'medium_term', 'long_term']
+    tracks = {}
+    titles = {}
+    for r in ranges:
+        tracks[r] = mtot.get_top_tracks(token, time_range=r)
+        tracks[r] = tracks[r]['items']
+        # Add titles and artist name
+        titles[r] = [s['name'] + ' - ' + s['artists'][0]['name'] for s in tracks[r]]
+        # Add track Spotify id
+        tracks[r] = [s['id'] for s in tracks[r]]
+
+    commons = list( set(tracks['long_term']).intersection(set(tracks['medium_term'])).intersection(set(tracks['short_term'])) )
+
+    favorites = []
+    for c in commons:
+        favorites.append(mtot.get_track_info(c))
+
+    return render_template('spotify_favorites.html', favorites=favorites, titles = titles)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

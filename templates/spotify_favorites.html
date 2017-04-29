@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Volrac's guess.
+{% endblock %}
+
+{% block head %}
+<style>
+body {
+	background: url('/static/images/spotify.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: #000;
+}
+#favorite-heading {
+	color: #FFF;
+}
+.card-img-top {
+	border-bottom: 1px solid #ebebeb;
+}
+.music-card {
+	width: 355px;
+}
+#playlist-area {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.favorites {
+	font-size: 0.8em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-6 mx-auto text-center" id="main-col">
+			<h1 id="favorite-heading">Your Favorite/s</h1>
+			<div class="card-deck">
+				{% for fav in favorites %}
+					<div class="card music-card">
+						
+					 	<div class="card-block">
+					    	<h4 class="card-title">{{ fav['name'] }}</h4>
+					    	<h2>
+					    		<a href="{{ fav['uri'] }}" class="btn btn-success">
+				    				Open in Spotify
+				    			</a>
+				    		</h2>
+					    	<div class="card-text">
+					    		<div>
+					    			<strong>Artist:</strong>
+					    				{% for artist in fav['artists'] %}
+					    					<a href="{{ artist['uri'] }}" target="_blank">
+					    						{{ artist['name'] }}
+					    					</a>
+					    				{% endfor %}
+					    		</div>
+					    		<div>
+					    			<strong>Album:</strong>
+				    					<a href="{{ fav['album']['uri'] }}" target="_blank">
+				    						{{ fav['album']['name'] }}
+				    					</a>
+					    		</div>
+					    	</div>
+				    		<div class="card-text">
+				    			<iframe src="https://open.spotify.com/embed?uri={{ fav['uri']|urlencode }}" width="235" height="80" frameborder="0" allowtransparency="true"></iframe>
+				    		</div>
+					  	</div>
+					</div>
+				
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-sm-10 offset-sm-1" id="playlist-area">
+			<div class="card-deck">
+
+				<div class="card">
+					<div class="card-block">
+						<h4 class="card-title text-center">Short Term</h4>
+						<div class="card-text">
+							<div class="text-muted">
+								Songs you've been listening to recently.
+							</div>
+							<ol class="favorites">
+								{% for s in titles['short_term'] %}
+								<li>
+									{{ s }}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-block">
+						<h4 class="card-title text-center">Medium Term</h4>
+						<div class="card-text">
+							<div class="text-muted">
+								Songs you've been listening to since a while back.
+							</div>
+							<ol class="favorites">
+								{% for s in titles['medium_term'] %}
+								<li>
+									{{ s }}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-block">
+						<h4 class="card-title text-center">Long Term</h4>
+						<div class="card-text">
+							<div class="text-muted">
+								Songs you've been listening to since way before.
+							</div>
+							<ol class="favorites">
+								{% for s in titles['long_term'] %}
+								<li>
+									{{ s }}
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,2 +1,3 @@
 venv/
 settings.*
+export_spotify_vars.sh
