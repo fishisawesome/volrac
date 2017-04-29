@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, session
+from flask import Flask, render_template, request, flash, session, redirect
 
 import os
 import settings
@@ -63,6 +63,10 @@ def contact():
         flash('Message successfully sent to the trustworthy coder.', 'success')
 
     return render_template('contact.html')
+
+@app.route('/read')
+def read():
+    return redirect("//thegreat.volrac.net", code=302)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
