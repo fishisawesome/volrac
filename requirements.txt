@@ -41,7 +41,7 @@ datashape==0.5.1
 decorator==4.0.9
 dill==0.2.4
 divio-cli==3.0.1
-Django==1.10.5
+Django==1.11.28
 django-crispy-forms==1.6.1
 django-djconfig==0.5.3
 django-haystack==2.5.1
