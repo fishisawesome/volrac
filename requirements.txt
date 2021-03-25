@@ -146,7 +146,7 @@ pyparsing==2.0.3
 pytest==2.8.5
 python-dateutil==2.6.0
 pytz==2016.7
-PyYAML==3.12
+PyYAML==5.4
 pyzmq==15.2.0
 QtAwesome==0.3.2
 qtconsole==4.2.0
