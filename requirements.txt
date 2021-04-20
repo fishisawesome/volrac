@@ -128,7 +128,7 @@ ply==3.8
 psutil==4.1.0
 psycopg2==2.6.2
 ptyprocess==0.5
-py==1.4.31
+py==1.10.0
 pyasn1==0.1.9
 PyAudio==0.2.7
 pycodestyle==2.2.0
