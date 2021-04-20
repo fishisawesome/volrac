@@ -183,7 +183,7 @@ virtualenv==15.0.3
 wagtail==1.7
 wagtailerrorpages==1.1.5
 webencodings==0.5
-Werkzeug==0.11.4
+Werkzeug==0.15.3
 Whoosh==2.7.0
 Willow==0.4
 wrapt==1.10.8
