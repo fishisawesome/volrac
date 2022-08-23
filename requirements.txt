@@ -103,7 +103,7 @@ mkdocs-bootswatch==0.4.0
 mkdocs-material==0.2.4
 mpmath==0.19
 multipledispatch==0.4.8
-nbconvert==4.1.0
+nbconvert==6.5.1
 nbformat==4.0.1
 networkx==1.11
 nltk==3.2.2
